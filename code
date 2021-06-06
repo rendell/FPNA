@@ -1,0 +1,40 @@
+---
+title: "FPNA survey"
+output: html_notebook
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+
+# Read in survey data
+```{r}
+setwd("~/FPNA")
+FPNA_entrance <- read.csv("~/FPNA/FPNA_entrance.csv", sep=";", comment.char="#")
+FPNA_exit <- read_delim("FPNA_exit.csv", 
++     ";", escape_double = FALSE, trim_ws = TRUE)) # Not sure if this is fully correct
+
+merged <- full_join(FPNA_entrance,FPNA_exit,by=c("Please.fill.in.your.External.Id...Your.ID.is.the.serial.number.found.on.your.wristband..you..will.require.this.ID.to.complete.your.final.survey.after.your.visit.....Receive.a.gift.from.the..park.after.completing.the.last.survey..while.supplies.last..." = "Please fill in your pre-visit survey code (the code is the unique serial number on your wristband) *"))
+```
+
+```{r}
+levels(FPNA_entrance$X1...How.many.adults.18..are.you.accompanied.with.for.your.visit...)[levels(FPNA_entrance$X1...How.many.adults.18..are.you.accompanied.with.for.your.visit...)=="Two"] <- "2" #data cleaning
+table(FPNA_entrance$X1...How.many.adults.18..are.you.accompanied.with.for.your.visit...)
+```
+
+```{r}
+table(FPNA_entrance$X2...How.many.children..younger.than.18..are.you.accommpanied.with.for.your.visit...)
+```
+# Still need to convert birthdate to age
+```{r}
+age_calc(FPNA_entrance$X3...Please.indicate.your.birthdate..)
+table(FPNA_entrance$X3...Please.indicate.your.birthdate..)
+```
+
+```{r}
+table(FPNA_entrance$Please.indicate.your.gender..)
+```
+
+
