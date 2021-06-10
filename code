@@ -4,9 +4,17 @@ output: html_notebook
 ---
 
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 ```
+
+Colours by Lay:
+AB7942
+66823B 
+FF6630
+F0B333
+
+
 
 
 # Read in survey data
@@ -17,6 +25,14 @@ FPNA_exit <- read_delim("FPNA_exit.csv",
 +     ";", escape_double = FALSE, trim_ws = TRUE)) # Not sure if this is fully correct
 
 merged <- full_join(FPNA_entrance,FPNA_exit,by=c("Please.fill.in.your.External.Id...Your.ID.is.the.serial.number.found.on.your.wristband..you..will.require.this.ID.to.complete.your.final.survey.after.your.visit.....Receive.a.gift.from.the..park.after.completing.the.last.survey..while.supplies.last..." = "Please fill in your pre-visit survey code (the code is the unique serial number on your wristband) *"))
+
+
+#remove dummmy entries
+
+
+
+
+
 ```
 
 ```{r}
@@ -29,8 +45,28 @@ table(FPNA_entrance$X2...How.many.children..younger.than.18..are.you.accommpanie
 ```
 # Still need to convert birthdate to age
 ```{r}
-age_calc(FPNA_entrance$X3...Please.indicate.your.birthdate..)
+library(eeptools)
+library(anytime)
+
+FPNA_entrance$X3...Please.indicate.your.birthdate..<-anydate(FPNA_entrance$X3...Please.indicate.your.birthdate..)
+
+FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2022-05-20","2021-01-01")
+
+FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2021-05-20","2021-01-01")
+
+FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2021-05-13","2021-01-01")
+
+FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2021-05-13","2021-01-01")
+
+
+
+
+
+FPNA_entrance$X3...Please.indicate.your.birthdate..<-age_calc(na.omit(FPNA_entrance$X3...Please.indicate.your.birthdate.., units='years'))
 table(FPNA_entrance$X3...Please.indicate.your.birthdate..)
+
+age_calc(as.Date(FPNA_entrance$X3...Please.indicate.your.birthdate.., enddate = Sys.Date(), units = "years", precise = TRUE))
+
 ```
 
 ```{r}
