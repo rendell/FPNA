@@ -74,3 +74,22 @@ table(FPNA_entrance$Please.indicate.your.gender..)
 ```
 
 
+### New parts
+
+```{r}
+table(FPNA_entrance$Please.indicate.your.Country.of.origin..)
+table(FPNA_entrance$Are.you.a.first.time.visitor.or.repeat.visitor.of.the.park...)
+
+
+```
+# Purpose of visitn FPNA
+```{r}
+table(FPNA_entrance$Are.you.visiting.the.park.mainly.for.educational..recreational.activities.or.for.its.natural.resources.)
+```
+Almost half of the visitors(49%) view the park as primarly a recreational activity, while 39% consider it to be a combination of recreation, natural resources and educational. Interestingly, the educational component is clearly less pronounced as few visitors (1%) listed this as their purpose of visiting.
+
+# Level of education
+Is this question phrased correctly? 
+```{r}
+table(FPNA_entrance$What.is.the.highest.degree.that.you.have.completed...)
+```
