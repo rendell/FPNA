@@ -4,15 +4,18 @@ output: html_notebook
 ---
 
 
-```{r, message=FALSE}
+```{r, echo=FALSE}
 library(tidyverse)
 ```
 
+
+```{r, echo=FALSE, eval=FALSE}
 Colours by Lay:
 AB7942
 66823B 
 FF6630
 F0B333
+```
 
 
 
@@ -27,9 +30,8 @@ FPNA_exit <- read_delim("FPNA_exit.csv",
 merged <- full_join(FPNA_entrance,FPNA_exit,by=c("Please.fill.in.your.External.Id...Your.ID.is.the.serial.number.found.on.your.wristband..you..will.require.this.ID.to.complete.your.final.survey.after.your.visit.....Receive.a.gift.from.the..park.after.completing.the.last.survey..while.supplies.last..." = "Please fill in your pre-visit survey code (the code is the unique serial number on your wristband) *"))
 
 
-#remove dummmy entries
-
-
+Entrance <- read.csv("20210614 Responses_ Entrance ENG.csv", stringsAsFactors = FALSE)
+exit<- read.csv("20210614 Responses_Exit ENG.csv", stringsAsFactors = FALSE)
 
 
 
@@ -38,31 +40,19 @@ merged <- full_join(FPNA_entrance,FPNA_exit,by=c("Please.fill.in.your.External.I
 ```{r}
 levels(FPNA_entrance$X1...How.many.adults.18..are.you.accompanied.with.for.your.visit...)[levels(FPNA_entrance$X1...How.many.adults.18..are.you.accompanied.with.for.your.visit...)=="Two"] <- "2" #data cleaning
 table(FPNA_entrance$X1...How.many.adults.18..are.you.accompanied.with.for.your.visit...)
+# New data
+table(Entrance$How.many.adults.18.and.older.are.you.accompanied.with.for.your.visit.)
 ```
 
 ```{r}
 table(FPNA_entrance$X2...How.many.children..younger.than.18..are.you.accommpanied.with.for.your.visit...)
+
+# new
+table(Entrance$How.many.children.younger.than.18.are.you.accommpanied.with.for.your.visit.)
 ```
 # Still need to convert birthdate to age
 ```{r}
-library(eeptools)
-library(anytime)
-
-FPNA_entrance$X3...Please.indicate.your.birthdate..<-anydate(FPNA_entrance$X3...Please.indicate.your.birthdate..)
-
-FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2022-05-20","2021-01-01")
-
-FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2021-05-20","2021-01-01")
-
-FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2021-05-13","2021-01-01")
-
-FPNA_entrance$X3...Please.indicate.your.birthdate..<-replace(FPNA_entrance$X3...Please.indicate.your.birthdate.., FPNA_entrance$X3...Please.indicate.your.birthdate..=="2021-05-13","2021-01-01")
-
-
-
-
-
-FPNA_entrance$X3...Please.indicate.your.birthdate..<-age_calc(na.omit(FPNA_entrance$X3...Please.indicate.your.birthdate.., units='years'))
+age_calc(FPNA_entrance$X3...Please.indicate.your.birthdate..)
 table(FPNA_entrance$X3...Please.indicate.your.birthdate..)
 
 age_calc(as.Date(FPNA_entrance$X3...Please.indicate.your.birthdate.., enddate = Sys.Date(), units = "years", precise = TRUE))
@@ -74,10 +64,9 @@ table(FPNA_entrance$Please.indicate.your.gender..)
 ```
 
 
-### New parts
 
 ```{r}
-table(FPNA_entrance$Please.indicate.your.Country.of.origin..)
+table(Entrance$Please.indicate.your.Country.of.origin)
 table(FPNA_entrance$Are.you.a.first.time.visitor.or.repeat.visitor.of.the.park...)
 
 
@@ -92,4 +81,52 @@ Almost half of the visitors(49%) view the park as primarly a recreational activi
 Is this question phrased correctly? 
 ```{r}
 table(FPNA_entrance$What.is.the.highest.degree.that.you.have.completed...)
+```
+
+# first time vs. repeaters
+```{r}
+table(FPNA_entrance$Are.you.a.first.time.visitor.or.repeat.visitor.of.the.park...)
+```
+
+```{r}
+table(FPNA_entrance$Do.you.visit.the.park.on.every.Aruba.vacation...)
+```
+
+```{r}
+table(FPNA_entrance$What.do.you.expect.you.will.enjoy.the.most.out.of.the.features.of.Arikok.s.National.Park.during.your.visit....)
+```
+
+```{r}
+table(Entrance$How.would.you.rate.your.first.contact.with.the.park.at.the.visitors.center..Rate.between.1.to.5..with.1.being.very.unsatisfied.and.5.being.very.satisfied)
+```
+
+
+```{r}
+table(exit$How.would.you.explain.your.experience.visiting.Arikok.National.Park.)
+```
+
+```{r}
+table(exit$If.you.visited.Arikok.National.Park.for.recreational.activities..what.were.your.favourite.things.to.do..Respondents.could.pick.up.to.three.activities.
+      )
+```
+
+
+
+```{r}
+table(exit$Please.explain.your.choice)
+```
+```{r}
+library(wordcloud)
+Positive<-read.csv("Positive.csv")
+set.seed(1234)
+wordcloud(words = Positive$Positive, freq = Positive$Freq, min.freq = 1,           max.words=200, random.order=FALSE, rot.per=0.35,            colors=brewer.pal(8, "Dark2"), scale=c(3.5,0.25))
+```
+```{r}
+Negative<-read.csv("Negative.csv")
+set.seed(10)
+wordcloud(words = Negative$Negative, freq = Negative$Freq, min.freq = 1,           max.words=200, random.order=FALSE, rot.per=0.35,            colors=brewer.pal(8, "Dark2"), scale=c(3.5,0.25))
+```
+```{r}
+table3<- as.data.frame(table(exit$What..if.any..changes.would.you.like.to.see.to.Arikok.National.Park.in.the.future..Tick.any.of.the.answers.you.feel.that.are.applicable))
+
 ```
