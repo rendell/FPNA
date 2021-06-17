@@ -7,6 +7,8 @@ output: html_notebook
 ```{r, echo=FALSE}
 library(tidyverse)
 library(ggrepel)
+library(cowplot)
+library(extrafont)
 ```
 
 
@@ -153,34 +155,531 @@ table(exit$Please.consider.all.your.experiences.to.date.with.FPNA..including.all
 
 # GGplot
 ```{r}
+#DNM
 DNM_C<-  clean_ideas %>%
   filter(Group == "DNM" & Theme == "Conservation")
-
 DNM_E<-  clean_ideas %>%
   filter(Group == "DNM" & Theme == "Education")
-  
-#######  
+DNM_R<-  clean_ideas %>%
+  filter(Group == "DNM" & Theme == "Recreation")
+DNM_NO<-  clean_ideas %>%
+  filter(Group == "DNM" & Theme == "Non-Marketable" | Theme == "Other/support")
+
+#ATA_ATS_AHATA_ACE
+ATA_ATS_AHATA_ACE_C<-  clean_ideas %>%
+  filter(Group == "ATA_ATS_AHATA_ACE" & Theme == "Conservation")
+ATA_ATS_AHATA_ACE_E<-  clean_ideas %>%
+  filter(Group == "ATA_ATS_AHATA_ACE" & Theme == "Education")
+ATA_ATS_AHATA_ACE_R<-  clean_ideas %>%
+  filter(Group == "ATA_ATS_AHATA_ACE" & Theme == "Recreation")
+ATA_ATS_AHATA_ACE_NO<-  clean_ideas %>%
+  filter(Group == "ATA_ATS_AHATA_ACE" & Theme == "Non-Marketable" | Theme == "Other/support")
+
+#FPNA
+FPNA_C<-  clean_ideas %>%
+  filter(Group == "FPNA" & Theme == "Conservation")
+FPNA_E<-  clean_ideas %>%
+  filter(Group == "FPNA" & Theme == "Education")
+FPNA_R<-  clean_ideas %>%
+  filter(Group == "FPNA" & Theme == "Recreation")
+FPNA_NO<-  clean_ideas %>%
+  filter(Group == "FPNA" & Theme == "Non-Marketable" | Theme == "Other/support")
+
+# NGO_TOUR_OP
+NGO_TOUR_OP_C<-  clean_ideas %>%
+  filter(Group == "NGO_TOUR_OP" & Theme == "Conservation")
+NGO_TOUR_OP_E<-  clean_ideas %>%
+  filter(Group == "NGO_TOUR_OP" & Theme == "Education")
+NGO_TOUR_OP_R<-  clean_ideas %>%
+  filter(Group == "NGO_TOUR_OP" & Theme == "Recreation")
+NGO_TOUR_OP_NO<-  clean_ideas %>%
+  filter(Group == "NGO_TOUR_OP" & Theme == "Non-Marketable" | Theme == "Other/support")
+
+# UA
+UA_C<-  clean_ideas %>%
+  filter(Group == "UA" & Theme == "Conservation")
+UA_E<-  clean_ideas %>%
+  filter(Group == "UA" & Theme == "Education")
+UA_R<-  clean_ideas %>%
+  filter(Group == "UA" & Theme == "Recreation")
+UA_NO<-  clean_ideas %>%
+  filter(Group == "UA" & Theme == "Non-Marketable" | Theme == "Other/support")
+```
+
+
+
+```{r}
+#######   #ATA_ATS_AHATA_ACE
+plot_ATA_ATS_AHATA_ACE_C<-  ggplot(ATA_ATS_AHATA_ACE_C, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+
+plot_ATA_ATS_AHATA_ACE_E <-  ggplot(ATA_ATS_AHATA_ACE_E, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_ATA_ATS_AHATA_ACE_R <-  ggplot(ATA_ATS_AHATA_ACE_R, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_ATA_ATS_AHATA_ACE_NO <-  ggplot(ATA_ATS_AHATA_ACE_NO, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+#### DNM
 plot_DNM_C<-  ggplot(DNM_C, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
   geom_point() +
-  scale_shape_manual(values = c(2,16,8))+
-  scale_colour_brewer(palette = "Set2")+
-  geom_rug()
+  scale_shape_manual(values = c(2,16,8))
 
-plot_DNM_E+
-  geom_label_repel(aes(label = Name), size = 3)
 
-plot_DNM_E<-  ggplot(DNM_E, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+plot_DNM_E <-  ggplot(DNM_E, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
   geom_point() +
-  scale_shape_manual(values = c(2,16,8))+
-  scale_colour_brewer(palette = "Set2")
+  scale_shape_manual(values = c(2,16,8))
+
+plot_DNM_R <-  ggplot(DNM_R, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_DNM_NO <-  ggplot(DNM_NO, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+#### FPNA
+plot_FPNA_C<-  ggplot(FPNA_C, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+
+plot_FPNA_E <-  ggplot(FPNA_E, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_FPNA_R <-  ggplot(FPNA_R, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_FPNA_NO <-  ggplot(FPNA_NO, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+#### NGO_TOUR_OP
+plot_NGO_TOUR_OP_C<-  ggplot(NGO_TOUR_OP_C, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+
+plot_NGO_TOUR_OP_E <-  ggplot(NGO_TOUR_OP_E, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_NGO_TOUR_OP_R <-  ggplot(NGO_TOUR_OP_R, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_NGO_TOUR_OP_NO <-  ggplot(NGO_TOUR_OP_NO, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+#### UA
+plot_UA_C<-  ggplot(UA_C, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+
+plot_UA_E <-  ggplot(UA_E, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_UA_R <-  ggplot(UA_R, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+
+plot_UA_NO <-  ggplot(UA_NO, aes(x = Environmental.Footprint.impact..0....participant.average, y = Potential.revenue..0....participant.average, shape = RTB, colour = RTB)) +
+  geom_point() +
+  scale_shape_manual(values = c(2,16,8))
+```
+
+
+
+# Plot DNM
+```{r}
+######
+plot_DNM_C+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Conservation - DNM",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
 
 plot_DNM_E+
   geom_label_repel(aes(label = Name), size = 3)+
   geom_rug()+ 
   ylim(0,10)+
   xlim(0,10)+ 
-  labs(x = "Percieved Environmental footprint", y="Potential revenue")+ 
-  geom_hline(yintercept=5, linetype="dashed", color = "red")+ 
-  geom_vline(xintercept=5, linetype="dashed", color = "red")+ 
-  labs(title = "DNM - Education")
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Education - DNM",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_DNM_R+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Recreation - DNM",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_DNM_NO+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Other / non-marketable - DNM",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+```
+
+# Plot ATA_ATS_AHATA_ACE
+```{r}
+plot_ATA_ATS_AHATA_ACE_C+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Conservation - ATA_ATS_AHATA_ACE",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+
+plot_ATA_ATS_AHATA_ACE_E+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Education - ATA_ATS_AHATA_ACE",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_ATA_ATS_AHATA_ACE_R+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Recreation - ATA_ATS_AHATA_ACE",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_ATA_ATS_AHATA_ACE_NO+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Other / non-marketable - ATA_ATS_AHATA_ACE",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+```
+
+# Plot FPNA
+```{r}
+plot_FPNA_C+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Conservation - FPNA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+
+plot_FPNA_E+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Education - FPNA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_FPNA_R+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Recreation - FPNA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_FPNA_NO+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Other / non-marketable - FPNA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+```
+
+
+# Plot NGO_TOUR_OP
+```{r}
+plot_NGO_TOUR_OP_C+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Conservation - NGO_TOUR_OP",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+
+plot_NGO_TOUR_OP_E+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Education - NGO_TOUR_OP",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_NGO_TOUR_OP_R+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Recreation - NGO_TOUR_OP",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_NGO_TOUR_OP_NO+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Other / non-marketable - NGO_TOUR_OP",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+```
+
+# Plot UA
+```{r}
+plot_UA_C+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Conservation - UA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+
+plot_UA_E+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Education - UA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_UA_R+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Recreation - UA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
+
+plot_UA_NO+
+  geom_label_repel(aes(label = Name), size = 3)+
+  geom_rug()+ 
+  ylim(0,10)+
+  xlim(0,10)+ 
+  labs(x = "Perceived Environmental footprint", y="Potential revenue")+ 
+  geom_hline(yintercept=5, linetype="dashed", color = "black")+ 
+  geom_vline(xintercept=5, linetype="dashed", color = "black")+ 
+  labs(title = "Other / non-marketable - UA",
+       caption = "Rose = A highlight, success, small win, or something positive that happened.
+Thorn = A challenge or something you can use more support with.
+Bud = New ideas that can easily blossomed")+
+  labs() +
+  theme_bw()+
+  scale_color_manual(values=c("#66823B", "#FF6630", "#AB7942"))+ #66823B
+  theme(legend.position="bottom") +
+  theme(legend.title=element_blank())
 ```
