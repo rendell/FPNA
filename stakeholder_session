@@ -1,0 +1,30 @@
+---
+title: "Stakeholder"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+
+all_ideas<- read.csv("all_ideas.csv")
+discarded <- filter(all_ideas, Status=="Discard")
+# Removing ideas that were discarded
+clean_ideas<- filter(all_ideas, Status!="Discard")
+# Write csv file discarded
+# Question
+write.csv(discarded, file = "discarded.csv")
+```
+
+```{r}
+Clean_relevant_ideas <- filter(clean_ideas, Environmental.Footprint.impact..0....participant.average < 5.0 & Potential.revenue..0....participant.average > 5.0)
+```
+
+```{r}
+sum_clean_relevant_ideas <- Clean_relevant_ideas %>%
+    group_by(Name) %>%
+    summarize(Avg_environment = mean(Environmental.Footprint.impact..0....participant.average),
+              Avg_revenue = mean(Potential.revenue..0....participant.average)
+              )
+write.csv(sum_clean_relevant_ideas, file = "sum_cleaned_relevant_ideas.csv")  
+```
+
